@@ -80,30 +80,29 @@ builder.Services.AddScoped<ICommandHandler<PlaceBidCommand>, PlaceBidHandler>();
 builder.Services.AddHostedService<AuctionClosingWorker>();
 
 // 6. Configuracion de CORS
-var frontendUrl = builder.Configuration["FRONTEND_URL"];
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("FrontendCors", policy =>
     {
-        var origins = new List<string>
-        {
-            "http://localhost:5173",
-            "http://127.0.0.1:5173",
-            "http://localhost:5174",
-            "http://127.0.0.1:5174",
-            "http://localhost:3000",
-            "http://127.0.0.1:3000",
-            "http://localhost:5500",
-            "http://127.0.0.1:5500"
-        };
+        policy.SetIsOriginAllowed(origin =>
+            {
+                if (string.IsNullOrEmpty(origin)) return false;
+                var uri = new Uri(origin);
 
-        // Agregar URL de produccion (Vercel) si esta configurada
-        if (!string.IsNullOrEmpty(frontendUrl))
-        {
-            origins.Add(frontendUrl);
-        }
+                // Permitir localhost en cualquier puerto (desarrollo)
+                if (uri.Host == "localhost" || uri.Host == "127.0.0.1")
+                    return true;
 
-        policy.WithOrigins(origins.ToArray())
+                // Permitir cualquier subdominio de vercel.app (produccion/previews)
+                if (uri.Host.EndsWith(".vercel.app"))
+                    return true;
+
+                // Permitir Railway (por si se usa desde ahi)
+                if (uri.Host.EndsWith(".up.railway.app"))
+                    return true;
+
+                return false;
+            })
               .AllowAnyHeader()
               .AllowAnyMethod()
               .AllowCredentials(); // Para SignalR y Cookies
