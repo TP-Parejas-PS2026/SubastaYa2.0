@@ -7,7 +7,7 @@ using SubastaYa.Api.Domain.Enums;
 using SubastaYa.Api.Infrastructure.Data;
 using SubastaYa.Api.Presentation.Hubs;
 
-namespace SubastaYa.Api.Infrastructure.BackgroundServices;
+namespace SubastaYa.Api.BackgroundServices;
 
 public class AuctionClosingWorker : BackgroundService
 {

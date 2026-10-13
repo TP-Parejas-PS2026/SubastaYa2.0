@@ -5,9 +5,10 @@ using SubastaYa.Api.Application.Interfaces.Services;
 using SubastaYa.Api.Domain.Exceptions;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using Microsoft.Extensions.Configuration;
 using System.Text;
 
-namespace SubastaYa.Api.Application.Services;
+namespace SubastaYa.Api.Infrastructure.Services;
 
 public class AuthService : IAuthService
 {
