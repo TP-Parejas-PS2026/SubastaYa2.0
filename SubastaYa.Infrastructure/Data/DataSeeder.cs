@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using SubastaYa.Api.Domain.Entities;
 using SubastaYa.Api.Domain.Enums;
 using System.Security.Claims;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace SubastaYa.Api.Infrastructure.Data;
 
