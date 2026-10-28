@@ -108,6 +108,7 @@ export default function CreateAuctionPage() {
         body: JSON.stringify({
           title: formData.title.trim(),
           description: formData.description.trim(),
+          category: formData.category,
           startingPrice: parseFloat(formData.startingPrice),
           startTime: new Date(formData.startTime).toISOString(),
           endTime: new Date(formData.endTime).toISOString(),
